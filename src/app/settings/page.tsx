@@ -1,0 +1,137 @@
+"use client";
+import { useEffect, useState } from "react";
+
+import Sidebar from "../Sidebar";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+export default function SettingsPage() {
+  const [timerDuration, setTimerDuration] = useState(60);
+  const [showLiveStats, setShowLiveStats] = useState(true);
+  const [showAccuracy, setShowAccuracy] = useState(true);
+  const [showProgressBar, setShowProgressBar] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setTimerDuration(Number(localStorage.getItem("timerDuration")) || 60);
+      setShowLiveStats(localStorage.getItem("showLiveStats") !== "off");
+      setShowAccuracy(localStorage.getItem("showAccuracy") !== "off");
+      setShowProgressBar(localStorage.getItem("showProgressBar") !== "off");
+    }
+  }, []);
+
+  function handleTimerChange(val: number) {
+    setTimerDuration(val);
+    localStorage.setItem("timerDuration", String(val));
+  }
+  function handleLiveStatsChange(val: boolean) {
+    setShowLiveStats(val);
+    localStorage.setItem("showLiveStats", val ? "on" : "off");
+  }
+  function handleAccuracyChange(val: boolean) {
+    setShowAccuracy(val);
+    localStorage.setItem("showAccuracy", val ? "on" : "off");
+  }
+  function handleProgressBarChange(val: boolean) {
+    setShowProgressBar(val);
+    localStorage.setItem("showProgressBar", val ? "on" : "off");
+  }
+
+  return (
+    <div className="min-h-screen bg-zinc-100 dark:bg-zinc-950">
+      <Sidebar />
+      <header className="fixed top-0 left-0 w-full z-30 flex flex-col sm:flex-row items-center justify-between px-2 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-50 via-white to-zinc-100 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900 border-b border-zinc-200 dark:border-zinc-800 shadow-sm md:ml-44 sm:ml-56">
+        <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-start">
+          <Link href="/" className="flex items-center gap-2 text-lg sm:text-xl font-bold text-blue-700 dark:text-blue-300">
+            <svg className="w-6 h-6 text-blue-700 dark:text-blue-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M2 12l10-7 10 7-10 7-10-7z"/><path d="M2 12v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-7"/></svg>
+            KeyShark
+          </Link>
+          <span className="hidden xs:inline text-xs text-zinc-500 ml-2">Settings</span>
+        </div>
+        <div className="flex items-center gap-1 sm:gap-4 flex-nowrap w-full sm:w-auto justify-end">
+          <button
+            className="p-2 rounded hover:bg-blue-100 dark:hover:bg-zinc-800 flex items-center gap-2 transition"
+            aria-label="Back to Typing Test"
+            onClick={() => router.push("/")}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            <span className="hidden sm:inline">Back</span>
+          </button>
+        </div>
+      </header>
+      <main className="md:ml-44 sm:ml-56 pt-16 sm:pt-20 flex flex-col items-center justify-center min-h-[calc(100vh-56px)] w-full">
+        <section className="w-full max-w-2xl mt-4 sm:mt-8 p-0 sm:p-0 bg-transparent flex flex-col gap-4 sm:gap-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-center mb-2 mt-4 sm:mt-8">Settings <span className="text-xs sm:text-base font-normal">&mdash; Typing Test Preferences</span></h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+            {/* Show Accuracy Toggle */}
+            <div className="flex items-center justify-between bg-white dark:bg-zinc-900 rounded-lg shadow p-4 border border-zinc-200 dark:border-zinc-800">
+              <span className="text-sm font-medium flex items-center gap-2">
+                <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2l4-4"/></svg>
+                Show Accuracy
+              </span>
+              <button
+                className={`relative w-12 h-6 transition-colors duration-200 rounded-full focus:outline-none ${showAccuracy ? 'bg-blue-500' : 'bg-zinc-300 dark:bg-zinc-700'}`}
+                onClick={() => handleAccuracyChange(!showAccuracy)}
+                aria-pressed={showAccuracy}
+                aria-label="Toggle accuracy"
+              >
+                <span className={`absolute left-1 top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${showAccuracy ? 'translate-x-6' : ''}`}></span>
+              </button>
+            </div>
+            {/* Show Progress Bar Toggle */}
+            <div className="flex items-center justify-between bg-white dark:bg-zinc-900 rounded-lg shadow p-4 border border-zinc-200 dark:border-zinc-800">
+              <span className="text-sm font-medium flex items-center gap-2">
+                <svg className="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="6" rx="3"/><rect x="6" y="14" width="6" height="2" rx="1"/></svg>
+                Show Progress Bar
+              </span>
+              <button
+                className={`relative w-12 h-6 transition-colors duration-200 rounded-full focus:outline-none ${showProgressBar ? 'bg-blue-500' : 'bg-zinc-300 dark:bg-zinc-700'}`}
+                onClick={() => handleProgressBarChange(!showProgressBar)}
+                aria-pressed={showProgressBar}
+                aria-label="Toggle progress bar"
+              >
+                <span className={`absolute left-1 top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${showProgressBar ? 'translate-x-6' : ''}`}></span>
+              </button>
+            </div>
+            {/* Timer Duration Select */}
+            <div className="flex items-center justify-between bg-white dark:bg-zinc-900 rounded-lg shadow p-4 border border-zinc-200 dark:border-zinc-800">
+              <span className="text-sm font-medium flex items-center gap-2">
+                <svg className="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Timer Duration
+              </span>
+              <select
+                className="ml-2 p-1 rounded border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-xs"
+                value={timerDuration}
+                onChange={e => handleTimerChange(Number(e.target.value))}
+              >
+                <option value={15}>15 seconds</option>
+                <option value={30}>30 seconds</option>
+                <option value={60}>60 seconds</option>
+                <option value={120}>120 seconds</option>
+              </select>
+            </div>
+            {/* Show Live WPM/CPM Toggle */}
+            <div className="flex items-center justify-between bg-white dark:bg-zinc-900 rounded-lg shadow p-4 border border-zinc-200 dark:border-zinc-800">
+              <span className="text-sm font-medium flex items-center gap-2">
+                <svg className="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+                Show Live WPM/CPM
+              </span>
+              <button
+                className={`relative w-12 h-6 transition-colors duration-200 rounded-full focus:outline-none ${showLiveStats ? 'bg-blue-500' : 'bg-zinc-300 dark:bg-zinc-700'}`}
+                onClick={() => handleLiveStatsChange(!showLiveStats)}
+                aria-pressed={showLiveStats}
+                aria-label="Toggle live stats"
+              >
+                <span className={`absolute left-1 top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${showLiveStats ? 'translate-x-6' : ''}`}></span>
+              </button>
+            </div>
+          </div>
+          <div className="flex flex-col gap-1 mt-4">
+            <span className="text-xs text-zinc-500">Settings are saved in your browser and apply instantly.</span>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
