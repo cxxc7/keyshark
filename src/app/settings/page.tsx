@@ -2,14 +2,12 @@
 import { useEffect, useState } from "react";
 
 import Sidebar from "../Sidebar";
-import { useRouter } from "next/navigation";
 
 export default function SettingsPage() {
   const [timerDuration, setTimerDuration] = useState(60);
   const [showLiveStats, setShowLiveStats] = useState(true);
   const [showAccuracy, setShowAccuracy] = useState(true);
   const [showProgressBar, setShowProgressBar] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -46,12 +44,13 @@ export default function SettingsPage() {
           <div className="grid grid-cols-1 xs:grid-cols-2 gap-4 xs:gap-6 w-full overflow-x-visible">
             {/* Show Accuracy Toggle */}
             <div className="flex items-center justify-between bg-white dark:bg-zinc-900 rounded-lg shadow p-4 border border-zinc-200 dark:border-zinc-800 min-w-0 w-full">
-              <span className="text-sm font-medium flex items-center gap-2">
-                <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2l4-4"/></svg>
+              <span className="text-lg font-semibold flex items-center gap-3">
+                <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2l4-4"/></svg>
                 Show Accuracy
               </span>
               <button
-                className={`relative w-12 h-6 transition-colors duration-200 rounded-full focus:outline-none ${showAccuracy ? 'bg-blue-500' : 'bg-zinc-300 dark:bg-zinc-700'}`}
+                className={`relative w-12 h-6 transition-colors duration-200 rounded-full focus:outline-none`}
+                style={{ backgroundColor: showAccuracy ? 'var(--accent-color, #2563eb)' : '' }}
                 onClick={() => handleAccuracyChange(!showAccuracy)}
                 aria-pressed={showAccuracy}
                 aria-label="Toggle accuracy"
@@ -61,12 +60,13 @@ export default function SettingsPage() {
             </div>
             {/* Show Progress Bar Toggle */}
             <div className="flex items-center justify-between bg-white dark:bg-zinc-900 rounded-lg shadow p-4 border border-zinc-200 dark:border-zinc-800 min-w-0 w-full">
-              <span className="text-sm font-medium flex items-center gap-2">
-                <svg className="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="6" rx="3"/><rect x="6" y="14" width="6" height="2" rx="1"/></svg>
+              <span className="text-lg font-semibold flex items-center gap-3">
+                <svg className="w-6 h-6 text-pink-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="6" rx="3"/><rect x="6" y="14" width="6" height="2" rx="1"/></svg>
                 Show Progress Bar
               </span>
               <button
-                className={`relative w-12 h-6 transition-colors duration-200 rounded-full focus:outline-none ${showProgressBar ? 'bg-blue-500' : 'bg-zinc-300 dark:bg-zinc-700'}`}
+                className={`relative w-12 h-6 transition-colors duration-200 rounded-full focus:outline-none`}
+                style={{ backgroundColor: showProgressBar ? 'var(--accent-color, #2563eb)' : '' }}
                 onClick={() => handleProgressBarChange(!showProgressBar)}
                 aria-pressed={showProgressBar}
                 aria-label="Toggle progress bar"
@@ -76,8 +76,8 @@ export default function SettingsPage() {
             </div>
             {/* Timer Duration Select */}
             <div className="flex items-center justify-between bg-white dark:bg-zinc-900 rounded-lg shadow p-4 border border-zinc-200 dark:border-zinc-800 min-w-0 w-full">
-              <span className="text-sm font-medium flex items-center gap-2">
-                <svg className="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              <span className="text-lg font-semibold flex items-center gap-3">
+                <svg className="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                 Timer Duration
               </span>
               <select
@@ -93,12 +93,13 @@ export default function SettingsPage() {
             </div>
             {/* Show Live WPM/CPM Toggle */}
             <div className="flex items-center justify-between bg-white dark:bg-zinc-900 rounded-lg shadow p-4 border border-zinc-200 dark:border-zinc-800 min-w-0 w-full">
-              <span className="text-sm font-medium flex items-center gap-2">
-                <svg className="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+              <span className="text-lg font-semibold flex items-center gap-3">
+                <svg className="w-6 h-6 text-cyan-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
                 Show Live WPM/CPM
               </span>
               <button
-                className={`relative w-12 h-6 transition-colors duration-200 rounded-full focus:outline-none ${showLiveStats ? 'bg-blue-500' : 'bg-zinc-300 dark:bg-zinc-700'}`}
+                className={`relative w-12 h-6 transition-colors duration-200 rounded-full focus:outline-none`}
+                style={{ backgroundColor: showLiveStats ? 'var(--accent-color, #2563eb)' : '' }}
                 onClick={() => handleLiveStatsChange(!showLiveStats)}
                 aria-pressed={showLiveStats}
                 aria-label="Toggle live stats"

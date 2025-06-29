@@ -23,7 +23,7 @@ export default function SignupPage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || "Signup failed.");
+        setError(data.error ?? "Signup failed.");
         return;
       }
       // Ensure user is present in accounts array
@@ -44,6 +44,7 @@ export default function SignupPage() {
       setError("");
       router.push("/profile");
     } catch (err) {
+      console.error("Signup error:", err);
       setError("Network error. Please try again.");
     }
   }

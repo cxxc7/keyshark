@@ -65,24 +65,21 @@ function TopBar() {
   return (
     <header className="w-full h-12 sm:h-14 flex items-center justify-between px-4 sm:px-8 bg-white/80 dark:bg-zinc-900/80 border-b border-zinc-200 dark:border-zinc-800 shadow-sm fixed top-0 left-0 z-30 backdrop-blur">
       <div className="flex items-center gap-2 min-w-0 flex-1">
-        <span className="font-bold text-lg tracking-tight text-blue-700 dark:text-blue-300 select-none">KeyShark</span>
+        <span className="font-bold text-lg tracking-tight select-none" style={{ color: 'var(--accent-color, #2563eb)' }}>KeyShark</span>
         <span className="ml-2 text-xs text-zinc-400 font-mono hidden sm:inline">Typing Test</span>
         <div className="flex-1 flex items-center min-w-0 mx-4 overflow-hidden">
           <div className="w-full overflow-hidden whitespace-nowrap">
-            <div className="animate-marquee inline-block min-w-full text-xs sm:text-sm text-blue-700 dark:text-blue-300 font-medium opacity-80" style={{ animation: 'marquee 30s linear infinite' }}>
+            <div className="animate-marquee inline-block min-w-full text-xs sm:text-sm font-medium opacity-80" style={{ animation: 'marquee 30s linear infinite', color: 'var(--accent-color, #2563eb)' }}>
               <span style={{ display: 'inline-block', minWidth: '100%' }}>
                 {features.map((f, i) => (
                   <span key={f} className="mx-6">
-                    {f}
-                    <span aria-hidden="true"> • </span>
+                    <span aria-hidden="true">• </span>{f}
                   </span>
                 ))}
                 {/* Repeat for seamless loop */}
                 {features.map((f, i) => (
                   <span key={f + '-repeat'} className="mx-6">
-                    {f}
-                    <span aria-hidden="true"> • </span>
-                  </span>
+                    </span>
                 ))}
               </span>
             </div>
@@ -151,7 +148,7 @@ function TopBar() {
           <span className="hidden sm:inline">{hydrated && user ? user.split("@")[0] : "Login"}</span>
         </button>
       </div>
-      <style jsx>{`
+      <style>{`
         @keyframes marquee {
           0% { transform: translateX(0%); }
           100% { transform: translateX(-50%); }

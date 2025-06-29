@@ -19,11 +19,7 @@ const PARAGRAPHS = [
   "Indian festivals like Diwali, Holi, and Eid are celebrated with joy and enthusiasm, bringing families and communities together in vibrant displays of light, colour, and tradition."
 ];
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import Sidebar from "./Sidebar";
-
-
 
 // Helper: get ISO week number
 function getISOWeek(date: Date) {
@@ -60,12 +56,12 @@ export default function TypingTest() {
     if (typeof window !== "undefined") {
       setSound(localStorage.getItem("sound") !== "off");
       setShowHints(localStorage.getItem("showHints") !== "off");
-      setTimerDuration(Number(localStorage.getItem("timerDuration")) || 60);
+      setTimerDuration(Number(localStorage.getItem("timerDuration") ?? 60));
       setShowLiveStats(localStorage.getItem("showLiveStats") !== "off");
       setShowAccuracy(localStorage.getItem("showAccuracy") !== "off");
       setShowProgressBar(localStorage.getItem("showProgressBar") !== "off");
     }
-    loadParagraph(Number(localStorage.getItem("timerDuration")) || 60);
+    loadParagraph(Number(localStorage.getItem("timerDuration") ?? 60));
     // Focus input on keydown
     const focusInput = () => inputRef.current?.focus();
     window.addEventListener("keydown", focusInput);
@@ -73,39 +69,73 @@ export default function TypingTest() {
     // eslint-disable-next-line
   }, []);
 
+  // Helper: Update personal bests
+  function updatePersonalBests(wpm: number, cpm: number, accuracy: number, sessionMin: number) {
+    const prevBestWpm = Number(localStorage.getItem("bestWpm") ?? 0);
+    const prevBestAccuracy = Number(localStorage.getItem("bestAccuracy") ?? 0);
+    const prevLongest = Number(localStorage.getItem("longestSession") ?? 0);
+    if (wpm > prevBestWpm) localStorage.setItem("bestWpm", String(wpm));
+    if (cpm > prevBestWpm * 5) localStorage.setItem("bestCpm", String(cpm));
+    if (accuracy > prevBestAccuracy) localStorage.setItem("bestAccuracy", String(accuracy));
+    if (sessionMin > prevLongest) localStorage.setItem("longestSession", String(sessionMin));
+  }
+  
+  function getPracticeWeeks() {
+    try {
+      return JSON.parse(localStorage.getItem('practiceWeeks') ?? '{}') as Record<string, number>;
+    } catch {
+      return {};
+    }
+  }
+  
+  function setPracticeWeeks(weekObj: Record<string, number>) {
+    localStorage.setItem('practiceWeeks', JSON.stringify(weekObj));
+  }
+  
+  function updatePracticeCount(timerDuration: number, timeLeft: number) {
+    const now = new Date();
+    const week = now.getFullYear() + '-' + getISOWeek(now);
+    const weekObj = getPracticeWeeks();
+    weekObj[week] = (weekObj[week] || 0) + 1;
+    setPracticeWeeks(weekObj);
+    localStorage.setItem('practiceCount', String(weekObj[week]));
+    return { week, weekObj };
+  }
+  
+  function getBadges(): string[] {
+    try {
+      return JSON.parse(localStorage.getItem('badges') ?? '[]');
+    } catch {
+      return [];
+    }
+  }
+  
+  function setBadges(badges: string[]) {
+    localStorage.setItem('badges', JSON.stringify(badges));
+  }
+  
+  function updateBadges(wpm: number, accuracy: number, sessionMin: number, week: string, weekObj: Record<string, number>) {
+    const badges = getBadges();
+    const addBadge = (label: string) => {
+      if (!badges.includes(label)) badges.push(label);
+    };
+    if (wpm >= 50) addBadge('First 50 WPM');
+    if (wpm >= 80) addBadge('80+ WPM!');
+    if (accuracy === 100) addBadge('No Mistakes');
+    if (sessionMin >= 10) addBadge('10+ Min Session');
+    if (weekObj[week] >= 7) addBadge('7 Days Streak');
+    setBadges(badges);
+  }
+
   useEffect(() => {
     if (charIndex === text.length && timer) {
       clearInterval(timer);
       setIsTyping(false);
-      // --- Personal Bests ---
-      const prevBestWpm = Number(localStorage.getItem("bestWpm") || 0);
-      const prevBestAccuracy = Number(localStorage.getItem("bestAccuracy") || 0);
-      const prevLongest = Number(localStorage.getItem("longestSession") || 0);
-      if (wpm > prevBestWpm) localStorage.setItem("bestWpm", String(wpm));
-      if (cpm > prevBestWpm * 5) localStorage.setItem("bestCpm", String(cpm));
       const accuracy = input.length > 0 ? Math.max(0, Math.round((input.split('').filter((c, i) => c === text[i]).length / input.length) * 100)) : 100;
-      if (accuracy > prevBestAccuracy) localStorage.setItem("bestAccuracy", String(accuracy));
       const sessionMin = Math.round((timerDuration - timeLeft) / 60);
-      if (sessionMin > prevLongest) localStorage.setItem("longestSession", String(sessionMin));
-      // --- Practice Count (for goals) ---
-      const now = new Date();
-      const week = now.getFullYear() + '-' + getISOWeek(now);
-      let weekObj: Record<string, number> = {};
-      try { weekObj = JSON.parse(localStorage.getItem('practiceWeeks') || '{}'); } catch {}
-      weekObj[week] = (weekObj[week] || 0) + 1;
-      localStorage.setItem('practiceWeeks', JSON.stringify(weekObj));
-      localStorage.setItem('practiceCount', String(weekObj[week]));
-      // --- Badges ---
-      let badges: string[] = [];
-      try { badges = JSON.parse(localStorage.getItem('badges') || '[]'); } catch {}
-      // Add badge if not present
-      function addBadge(label: string) { if (!badges.includes(label)) badges.push(label); }
-      if (wpm >= 50) addBadge('First 50 WPM');
-      if (wpm >= 80) addBadge('80+ WPM!');
-      if (accuracy === 100) addBadge('No Mistakes');
-      if (sessionMin >= 10) addBadge('10+ Min Session');
-      if (weekObj[week] >= 7) addBadge('7 Days Streak');
-      localStorage.setItem('badges', JSON.stringify(badges));
+      updatePersonalBests(wpm, cpm, accuracy, sessionMin);
+      const { week, weekObj } = updatePracticeCount(timerDuration, timeLeft);
+      updateBadges(wpm, accuracy, sessionMin, week, weekObj);
     }
     // eslint-disable-next-line
   }, [charIndex, text, timer]);
@@ -116,7 +146,7 @@ export default function TypingTest() {
     setInput("");
     setCharIndex(0);
     setMistakes(0);
-    const dur = duration || timerDuration;
+    const dur = duration ?? timerDuration;
     setTimeLeft(dur);
     setWpm(0);
     setCpm(0);
@@ -171,7 +201,7 @@ export default function TypingTest() {
       return;
     }
     const currentChar = text[charIndex];
-    if (val[val.length - 1] === currentChar) {
+    if (val.endsWith(currentChar)) {
       setCharIndex(charIndex + 1);
       playKeySound();
     } else {
@@ -214,7 +244,7 @@ export default function TypingTest() {
                 className = "text-red-500 dark:text-red-400";
               }
               return (
-                <span key={i} className={className}>{char}</span>
+                <span key={`${char}-${i}`} className={className}>{char}</span>
               );
             })}
           </div>

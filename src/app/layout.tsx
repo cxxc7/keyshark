@@ -1,7 +1,5 @@
 "use client";
 
-
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import TopBar from "./TopBar";
@@ -15,12 +13,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-// export const metadata: Metadata = {
-//   title: "KeyShark | Inspired by Monkeytype",
-//   description:
-//     "KeyShark is a modern, minimalist typing test app inspired by Monkeytype. Practice your typing speed and accuracy in a clean, accessible interface.",
-// };
 
 import { useEffect, useState } from "react";
 

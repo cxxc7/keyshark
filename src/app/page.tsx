@@ -1,4 +1,3 @@
-// import Image from "next/image";
 import TypingTest from "./TypingTest";
 
 export default function Home() {

@@ -31,7 +31,7 @@ export default function LoginPage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || "Login failed.");
+        setError(data.error ?? "Login failed.");
         return;
       }
       // Ensure user is present in accounts array
@@ -52,7 +52,11 @@ export default function LoginPage() {
       setError("");
       router.push("/profile");
     } catch (err) {
-      setError("Network error. Please try again.");
+      if (err instanceof Error) {
+        setError(err.message || "Network error. Please try again.");
+      } else {
+        setError("Network error. Please try again.");
+      }
     }
   }
 
