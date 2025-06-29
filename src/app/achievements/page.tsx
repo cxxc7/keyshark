@@ -103,7 +103,12 @@ export default function AchievementsPage() {
                 <span className="text-xs text-zinc-500">Best Accuracy</span>
               </div>
               <div className="flex flex-col items-center min-w-[80px]">
-                <span className="text-xl xs:text-2xl font-bold text-purple-600 dark:text-purple-400">{longestSession}</span>
+                <span
+                  className="text-xl xs:text-2xl font-bold"
+                  style={{ color: 'var(--accent-color, #2563eb)' }}
+                >
+                  {longestSession}
+                </span>
                 <span className="text-xs text-zinc-500">Longest Session (sec)</span>
               </div>
             </div>
@@ -116,7 +121,7 @@ export default function AchievementsPage() {
               {(() => {
                 const ALL_BADGES = [
                   "First 50 WPM",
-                  "80+ WPM!",
+                  "80+ WPM",
                   "No Mistakes",
                   "10+ Min Session",
                   "7 Days Streak"

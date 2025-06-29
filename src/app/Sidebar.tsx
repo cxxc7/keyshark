@@ -18,7 +18,8 @@ function SidebarNavButton({
   onClick,
   exact = false,
   className = "",
-}: NavItem & { currentPath: string; onClick: (path: string) => void }) {
+  collapsed = false,
+}: NavItem & { currentPath: string; onClick: (path: string) => void; collapsed?: boolean }) {
   const isActive = exact
     ? currentPath === path
     : currentPath.startsWith(path);
@@ -33,7 +34,7 @@ function SidebarNavButton({
       aria-current={isActive ? "page" : undefined}
     >
       {icon}
-      <span>{label}</span>
+      {!collapsed && <span>{label}</span>}
     </button>
   );
 }
@@ -42,11 +43,14 @@ export default function Sidebar() {
   const router = useRouter();
   const [user, setUser] = useState<string | null>(null);
   const [currentPath, setCurrentPath] = useState<string>("");
+  const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       setUser(localStorage.getItem("user"));
       setCurrentPath(window.location.pathname);
+      const saved = localStorage.getItem("sidebarCollapsed");
+      if (saved) setCollapsed(saved === "true");
     }
   }, []);
 
@@ -58,6 +62,13 @@ export default function Sidebar() {
   function handleLogout() {
     localStorage.removeItem("user");
     router.push("/login");
+  }
+
+  function toggleSidebar() {
+    setCollapsed((prev) => {
+      localStorage.setItem("sidebarCollapsed", String(!prev));
+      return !prev;
+    });
   }
 
   const navItems: NavItem[] = [
@@ -104,34 +115,61 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="hidden md:flex flex-col w-44 sm:w-56 h-full bg-gradient-to-b from-zinc-50 via-white to-zinc-100 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900 border-r border-zinc-200 dark:border-zinc-800 py-4 sm:py-6 px-2 sm:px-4 gap-4 sm:gap-6 fixed top-0 left-0 z-20 pt-14 sm:pt-16 shadow-lg">
-      <nav className="flex flex-col gap-2 sm:gap-4 mt-6 sm:mt-8">
-        {navItems.map((item) => (
+    <aside
+      className={`hidden md:flex flex-col h-full bg-gradient-to-b from-zinc-50 via-white to-zinc-100 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900 border-r border-zinc-200 dark:border-zinc-800 py-4 sm:py-6 px-2 sm:px-4 gap-4 sm:gap-6 fixed top-0 left-0 z-20 pt-14 sm:pt-16 shadow-lg transition-all duration-300 ${collapsed ? 'w-16 sm:w-20' : 'w-44 sm:w-56'}`}
+    >
+      <nav className={`flex flex-col gap-2 sm:gap-4 mt-6 sm:mt-8 ${collapsed ? 'items-center' : ''}`}>
+        <div className="flex items-center w-full">
+          <SidebarNavButton
+            key={navItems[0].path}
+            {...navItems[0]}
+            currentPath={currentPath}
+            onClick={handleNav}
+            className={collapsed ? 'justify-center px-2 flex-1' : 'flex-1'}
+            collapsed={collapsed}
+          />
+          <button
+            className="ml-1 p-1 rounded hover:bg-zinc-200 dark:hover:bg-zinc-800 transition flex items-center justify-center"
+            onClick={toggleSidebar}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            style={{ zIndex: 30 }}
+            type="button"
+          >
+            {collapsed ? (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" /></svg>
+            ) : (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" /></svg>
+            )}
+          </button>
+        </div>
+        {navItems.slice(1).map((item) => (
           <SidebarNavButton
             key={item.path}
             {...item}
             currentPath={currentPath}
             onClick={handleNav}
+            className={collapsed ? 'justify-center px-2' : ''}
+            collapsed={collapsed}
           />
         ))}
         {user && (
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-zinc-800 transition"
+            className={`flex items-center gap-3 px-3 py-2 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-zinc-800 transition ${collapsed ? 'justify-center px-2' : ''}`}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path d="M17 16l4-4m0 0l-4-4m4 4H7" />
               <rect x="3" y="4" width="8" height="16" rx="2" />
             </svg>
-            <span>Logout</span>
+            {!collapsed && <span>Logout</span>}
           </button>
         )}
       </nav>
-      <div className="mt-auto text-xs text-zinc-400 dark:text-zinc-600 flex items-center gap-2 justify-center pb-2">
+      <div className={`mt-auto text-xs text-zinc-400 dark:text-zinc-600 flex items-center gap-2 justify-center pb-2 ${collapsed ? 'flex-col' : ''}`}>
         <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
           <path d="M3 12h18M3 12a9 9 0 1 1 18 0" />
         </svg>
-        <span>&copy; 2025 KeyShark</span>
+        {!collapsed && <span>&copy; 2025 KeyShark</span>}
       </div>
     </aside>
   );

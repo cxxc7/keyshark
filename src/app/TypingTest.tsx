@@ -223,13 +223,12 @@ export default function TypingTest() {
       <main className="md:ml-20 sm:ml-56 pt-16 sm:pt-20 flex flex-col items-center justify-center min-h-[calc(100vh-56px)] w-full">
         <section className="w-full max-w-xs sm:max-w-xl mt-4 sm:mt-0 p-2 xs:p-3 sm:p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-lg flex flex-col gap-3 xs:gap-4 sm:gap-6 border border-zinc-200 dark:border-zinc-800">
           <h1 className="text-base xs:text-lg sm:text-2xl font-bold text-center mb-2">
-            <a className="flex items-center gap-2 text-base xs:text-lg sm:text-xl font-bold text-blue-700 dark:text-blue-300 justify-center" href="/">
-              <svg className="w-5 xs:w-6 h-5 xs:h-6 text-blue-700 dark:text-blue-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path d="M2 12l10-7 10 7-10 7-10-7z"></path>
-                <path d="M2 12v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-7"></path>
-              </svg>
+            <span
+              className="text-base xs:text-lg sm:text-xl font-bold justify-center"
+              style={{ color: 'var(--accent-color, #2563eb)' }}
+            >
               KeyShark
-            </a>
+            </span>
             <span className="block text-xs xs:text-sm sm:text-base font-normal">Inspired by Monkeytype</span>
           </h1>
           <div className="typing-text text-sm xs:text-base sm:text-lg font-mono bg-zinc-100 dark:bg-zinc-800 rounded p-1 xs:p-2 sm:p-4 min-h-[40px] xs:min-h-[48px] sm:min-h-[64px] select-none break-words">

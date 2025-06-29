@@ -14,7 +14,7 @@ function TopBar() {
     "Customisable accent colours",
     "Profile and settings management",
     "Practice streaks and personal bests",
-    "Open source on GitHub!",
+    "Open source on GitHub",
   ];
   const GITHUB_REPO_URL = "https://github.com/cxxc7/keyshark";
   const COLORS = [
@@ -64,9 +64,23 @@ function TopBar() {
   }
   return (
     <header className="w-full h-12 sm:h-14 flex items-center justify-between px-4 sm:px-8 bg-white/80 dark:bg-zinc-900/80 border-b border-zinc-200 dark:border-zinc-800 shadow-sm fixed top-0 left-0 z-30 backdrop-blur">
-      <div className="flex items-center gap-2 min-w-0 flex-1">
-        <span className="font-bold text-lg tracking-tight select-none" style={{ color: 'var(--accent-color, #2563eb)' }}>KeyShark</span>
-        <span className="ml-2 text-xs text-zinc-400 font-mono hidden sm:inline">Typing Test</span>
+      <div className="flex items-center gap-3 min-w-0 flex-1">
+        <button
+          className="flex items-center gap-2 font-bold text-lg tracking-tight select-none cursor-pointer bg-transparent border-none p-0 m-0 focus:outline-none"
+          style={{ color: 'var(--accent-color, #2563eb)' }}
+          onClick={() => router.push("/")}
+          aria-label="Go to home page"
+          type="button"
+        >
+          <span className="flex items-center justify-center mr-1">
+            <svg className="w-6 h-6 xs:w-7 xs:h-7 text-blue-700 dark:text-blue-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path d="M2 12l10-7 10 7-10 7-10-7z"></path>
+                <path d="M2 12v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-7"></path>
+            </svg>
+          </span>
+          <span className="ml-1">KeyShark</span>
+        </button>
+        <span className="ml-3 text-xs text-zinc-400 font-mono hidden sm:inline">Typing Test</span>
         <div className="flex-1 flex items-center min-w-0 mx-4 overflow-hidden">
           <div className="w-full overflow-hidden whitespace-nowrap">
             <div className="animate-marquee inline-block min-w-full text-xs sm:text-sm font-medium opacity-80" style={{ animation: 'marquee 30s linear infinite', color: 'var(--accent-color, #2563eb)' }}>
