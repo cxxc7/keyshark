@@ -72,7 +72,7 @@ A modern, minimalist typing test web app for practicing and improving typing spe
   <tr>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/nikhil" width="80" style="border-radius: 50%"><br/>
-      <b>Nikhil</b><br/>
+      <b>Nikhilesh</b><br/>
       <sub>Co-creator, Full Stack, UI/UX, Animations, API, Testing</sub>
     </td>
     <td align="center">
