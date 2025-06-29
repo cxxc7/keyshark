@@ -1,8 +1,10 @@
 "use client";
 
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import TopBar from "./TopBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,11 +60,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Hide TopBar on /login and /signup
+  let showTopBar = true;
+  if (typeof window !== "undefined") {
+    const path = window.location.pathname;
+    if (path === "/login" || path === "/signup") showTopBar = false;
+  }
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-blue-100 via-white to-blue-200 dark:from-zinc-900 dark:via-zinc-950 dark:to-blue-900`}
       >
+        {showTopBar && <TopBar />}
         <AuthGuard>{children}</AuthGuard>
       </body>
     </html>

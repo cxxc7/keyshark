@@ -17,11 +17,11 @@ const PARAGRAPHS = [
 
 export default function ParagraphsPage() {
   return (
-    <div className="min-h-screen bg-zinc-100 dark:bg-zinc-950 py-10 px-2 sm:px-8">
-      <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 text-[color:var(--accent-color)]">All Typing Paragraphs</h1>
-      <div className="max-w-2xl mx-auto flex flex-col gap-6">
+    <div className="min-h-screen bg-zinc-100 dark:bg-zinc-950 py-6 xs:py-10 px-2 xs:px-4 sm:px-8">
+      <h1 className="text-xl xs:text-2xl sm:text-3xl font-bold text-center mb-4 xs:mb-6 text-[color:var(--accent-color)]">All Typing Paragraphs</h1>
+      <div className="max-w-xs xs:max-w-xl sm:max-w-2xl mx-auto flex flex-col gap-4 xs:gap-6">
         {PARAGRAPHS.map((p, i) => (
-          <div key={i} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-4 shadow-sm text-base sm:text-lg font-mono">
+          <div key={i} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-3 xs:p-4 shadow-sm text-sm xs:text-base sm:text-lg font-mono">
             {p}
           </div>
         ))}

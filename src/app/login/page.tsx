@@ -57,10 +57,10 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-200 via-white to-blue-100 dark:from-zinc-900 dark:via-zinc-950 dark:to-blue-900">
-      <form onSubmit={handleLogin} className="bg-white/90 dark:bg-zinc-900/90 p-10 rounded-3xl shadow-2xl w-full max-w-md flex flex-col gap-7 border border-zinc-200 dark:border-zinc-800 backdrop-blur">
-        <h1 className="text-4xl font-extrabold text-center mb-2 text-blue-700 dark:text-blue-200 tracking-tight drop-shadow">Welcome Back</h1>
-        <p className="text-center text-zinc-500 dark:text-zinc-400 mb-2 text-base">Sign in to your account</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-200 via-white to-blue-100 dark:from-zinc-900 dark:via-zinc-950 dark:to-blue-900 px-2 xs:px-4">
+      <form onSubmit={handleLogin} className="bg-white/90 dark:bg-zinc-900/90 p-6 xs:p-8 sm:p-10 rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-xs xs:max-w-sm sm:max-w-md flex flex-col gap-5 xs:gap-6 sm:gap-7 border border-zinc-200 dark:border-zinc-800 backdrop-blur">
+        <h1 className="text-2xl xs:text-3xl sm:text-4xl font-extrabold text-center mb-1 xs:mb-2 text-blue-700 dark:text-blue-200 tracking-tight drop-shadow">Welcome Back</h1>
+        <p className="text-center text-zinc-500 dark:text-zinc-400 mb-1 xs:mb-2 text-sm xs:text-base">Sign in to your account</p>
         <div className="relative">
           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none">
             {/* User icon */}
@@ -68,7 +68,7 @@ export default function LoginPage() {
           </span>
           <input
             type="text"
-            className="p-4 pl-12 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg font-medium w-full"
+            className="p-3 xs:p-4 pl-12 rounded-lg xs:rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-base xs:text-lg font-medium w-full"
             placeholder="Email or Username"
             value={email}
             onChange={e => setEmail(e.target.value)}
@@ -83,7 +83,7 @@ export default function LoginPage() {
           </span>
           <input
             type={showPassword ? "text" : "password"}
-            className="p-4 pl-12 pr-12 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg font-medium w-full"
+            className="p-3 xs:p-4 pl-12 pr-12 rounded-lg xs:rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-base xs:text-lg font-medium w-full"
             placeholder="Password"
             value={password}
             onChange={e => setPassword(e.target.value)}
@@ -106,14 +106,14 @@ export default function LoginPage() {
             )}
           </button>
         </div>
-        {error && <div className="text-red-500 text-sm text-center font-semibold bg-red-50 dark:bg-zinc-800 rounded-lg py-2 px-3">{error}</div>}
+        {error && <div className="text-red-500 text-xs xs:text-sm text-center font-semibold bg-red-50 dark:bg-zinc-800 rounded-lg py-2 px-3">{error}</div>}
         <button
           type="submit"
-          className="mt-2 py-3 px-4 rounded-xl bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 transition shadow-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          className="mt-1 xs:mt-2 py-2 xs:py-3 px-3 xs:px-4 rounded-lg xs:rounded-xl bg-blue-600 text-white font-bold text-base xs:text-lg hover:bg-blue-700 transition shadow-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
         >
           Login
         </button>
-        <div className="text-sm text-center text-zinc-500 mt-2">
+        <div className="text-xs xs:text-sm text-center text-zinc-500 mt-1 xs:mt-2">
           Don't have an account? <a href="/signup" className="text-blue-600 dark:text-blue-400 underline font-semibold">Sign Up</a>
         </div>
       </form>
