@@ -6,7 +6,7 @@ const GITHUB_REPO_URL = "https://github.com/cxxc7/keyshark"; // TODO: Replace wi
 export default function TopBar() {
   // Features for the marquee
   const features = [
-    "Minimalist typing test UI",
+    "Minimalist UK-themed typing test UI",
     "Real-time WPM, CPM, and accuracy stats",
     "Accessible and responsive design",
     "Achievements and badges for progress",
