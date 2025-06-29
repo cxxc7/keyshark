@@ -356,8 +356,8 @@ export default function TypingTest() {
     <div className="min-h-screen bg-zinc-100 dark:bg-zinc-950">
       <TopBar />
       <Sidebar />
-      <main className="md:ml-44 sm:ml-56 pt-16 sm:pt-20 flex flex-col items-center justify-center min-h-[calc(100vh-56px)] w-full">
-        <section className="w-full max-w-xs sm:max-w-xl mt-4 sm:mt-8 p-3 sm:p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-lg flex flex-col gap-4 sm:gap-6 border border-zinc-200 dark:border-zinc-800">
+      <main className="md:ml-20 sm:ml-56 pt-16 sm:pt-20 flex flex-col items-center justify-center min-h-[calc(100vh-56px)] w-full">
+        <section className="w-full max-w-xs sm:max-w-xl mt-4 sm:mt-0 p-3 sm:p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-lg flex flex-col gap-4 sm:gap-6 border border-zinc-200 dark:border-zinc-800">
           <h1 className="text-lg sm:text-2xl font-bold text-center mb-2">KeyShark <span className="text-xs sm:text-base font-normal">&mdash; Inspired by Monkeytype</span></h1>
           <div className="typing-text text-base sm:text-lg font-mono bg-zinc-100 dark:bg-zinc-800 rounded p-2 sm:p-4 min-h-[48px] sm:min-h-[64px] select-none break-words">
             {text.split("").map((char, i) => {
