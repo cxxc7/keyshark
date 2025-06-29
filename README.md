@@ -11,7 +11,7 @@ A modern, minimalist typing test web app for practicing and improving typing spe
 
 ## Getting Started
 1. Install dependencies: `npm install`
-2. Run the dev server: `npm run dev` (opens on [http://localhost:1234](http://localhost:1234))
+2. Run the dev server: `npm run dev` 
 3. Open [http://localhost:1234](http://localhost:1234)
 
 ## Customization
