@@ -68,20 +68,7 @@ A modern, minimalist typing test web app for practicing and improving typing spe
 
 ## 👥 Collaborators
 
-<table>
-  <tr>
-    <td align="center">
-      <img src="https://avatars.githubusercontent.com/u/cxxc7" width="80" style="border-radius: 50%"><br/>
-      <b>Nikhilesh</b><br/>
-      <sub>Co-creator, Full Stack, UI/UX, Animations, API, Testing</sub>
-    </td>
-    <td align="center">
-      <img src="https://avatars.githubusercontent.com/u/KHAZI18" width="80" style="border-radius: 50%"><br/>
-      <b>Faizan</b><br/>
-      <sub>Co-creator, Full Stack, UI/UX, Animations, API, Testing</sub>
-    </td>
-  </tr>
-</table>
+<table> <tr> <td align="center"> <img src="https://github.com/cxxc7.png" width="80" style="border-radius: 50%"><br/> <b>Nikhilesh</b><br/> <sub>Co-creator, Full Stack, UI/UX, Animations, API, Testing</sub> </td> <td align="center"> <img src="https://github.com/KHAZI18.png" width="80" style="border-radius: 50%"><br/> <b>Faizan</b><br/> <sub>Co-creator, Full Stack, UI/UX, Animations, API, Testing</sub> </td> </tr> </table>
 
 ---
 
