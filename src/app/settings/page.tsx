@@ -8,19 +8,26 @@ export default function SettingsPage() {
   const [showLiveStats, setShowLiveStats] = useState(true);
   const [showAccuracy, setShowAccuracy] = useState(true);
   const [showProgressBar, setShowProgressBar] = useState(true);
+  const [sound, setSound] = useState(true); // Added sound state
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setTimerDuration(Number(localStorage.getItem("timerDuration")) || 60);
+      const storedDuration = Number(localStorage.getItem("timerDuration"));
+      const validDurations = [15, 30, 60, 120];
+      setTimerDuration(validDurations.includes(storedDuration) ? storedDuration : 60);
       setShowLiveStats(localStorage.getItem("showLiveStats") !== "off");
       setShowAccuracy(localStorage.getItem("showAccuracy") !== "off");
       setShowProgressBar(localStorage.getItem("showProgressBar") !== "off");
+      setSound(localStorage.getItem("sound") !== "off"); // Initialize sound
     }
   }, []);
 
   function handleTimerChange(val: number) {
-    setTimerDuration(val);
-    localStorage.setItem("timerDuration", String(val));
+    const validDurations = [15, 30, 60, 120];
+    if (validDurations.includes(val)) {
+      setTimerDuration(val);
+      localStorage.setItem("timerDuration", String(val));
+    }
   }
   function handleLiveStatsChange(val: boolean) {
     setShowLiveStats(val);
@@ -34,13 +41,17 @@ export default function SettingsPage() {
     setShowProgressBar(val);
     localStorage.setItem("showProgressBar", val ? "on" : "off");
   }
+  function handleSoundChange(val: boolean) { // Added sound handler
+    setSound(val);
+    localStorage.setItem("sound", val ? "on" : "off");
+  }
 
   return (
     <div className="min-h-screen bg-zinc-100 dark:bg-zinc-950">
       <Sidebar />
       <main className="md:ml-44 sm:ml-56 pt-16 sm:pt-20 flex flex-col items-center justify-center min-h-[calc(100vh-56px)] w-full">
         <section className="w-full max-w-2xl mt-4 sm:mt-8 p-2 xs:p-4 sm:p-0 bg-transparent flex flex-col gap-4 sm:gap-6">
-          <h1 className="text-xl xs:text-2xl sm:text-3xl font-bold text-center mb-2 mt-4 sm:mt-8">Settings <span className="text-xs xs:text-sm sm:text-base font-normal">&mdash; Typing Test Preferences</span></h1>
+          <h1 className="text-xl xs:text-2xl sm:text-3xl font-bold text-center mb-2 mt-4 sm:mt-8">Settings <span className="text-xs xs:text-sm sm:text-base font-normal">— Typing Test Preferences</span></h1>
           <div className="grid grid-cols-1 xs:grid-cols-2 gap-4 xs:gap-6 w-full overflow-x-visible">
             {/* Show Accuracy Toggle */}
             <div className="flex items-center justify-between bg-white dark:bg-zinc-900 rounded-lg shadow p-4 border border-zinc-200 dark:border-zinc-800 min-w-0 w-full">
@@ -105,6 +116,22 @@ export default function SettingsPage() {
                 aria-label="Toggle live stats"
               >
                 <span className={`absolute left-1 top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${showLiveStats ? 'translate-x-6' : ''}`}></span>
+              </button>
+            </div>
+            {/* Sound Toggle */}
+            <div className="flex items-center justify-between bg-white dark:bg-zinc-900 rounded-lg shadow p-4 border border-zinc-200 dark:border-zinc-800 min-w-0 w-full">
+              <span className="text-lg font-semibold flex items-center gap-3">
+                <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                Key Sound
+              </span>
+              <button
+                className={`relative w-12 h-6 transition-colors duration-200 rounded-full focus:outline-none`}
+                style={{ backgroundColor: sound ? 'var(--accent-color, #2563eb)' : '' }}
+                onClick={() => handleSoundChange(!sound)}
+                aria-pressed={sound}
+                aria126-label="Toggle key sound"
+              >
+                <span className={`absolute left-1 top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${sound ? 'translate-x-6' : ''}`}></span>
               </button>
             </div>
           </div>

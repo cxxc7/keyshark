@@ -55,7 +55,7 @@ A modern, minimalist typing test web app for practicing and improving typing spe
 
 1. Install dependencies: <code>npm install</code>
 2. Run the dev server: <code>npm run dev</code>
-3. Open <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>
+3. Open <a href="http://localhost:1234" target="_blank">http://localhost:1234</a>
 
 ---
 
