@@ -1,14 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: "export", // ✅ Enables static HTML export (replaces `next export`)
   devIndicators: {
-    // You can configure devIndicators options here if needed
+    buildActivity: true, // Optional, helpful during development
   },
 };
-
-// Custom dev server port for Next.js
-// To use port 1234, update your package.json scripts:
-// "dev": "next dev -p 1234"
 
 export default nextConfig;
