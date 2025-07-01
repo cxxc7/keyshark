@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export", // ✅ Enables static export
+  // Remove 'output: "export"' to keep API routes working
 };
 
 export default nextConfig;
