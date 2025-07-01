@@ -93,14 +93,22 @@ export default function TypingTest() {
   }
   
   function updatePracticeCount(timerDuration: number, timeLeft: number) {
-    const now = new Date();
-    const week = now.getFullYear() + '-' + getISOWeek(now);
-    const weekObj = getPracticeWeeks();
-    weekObj[week] = (weekObj[week] || 0) + 1;
-    setPracticeWeeks(weekObj);
-    localStorage.setItem('practiceCount', String(weekObj[week]));
-    return { week, weekObj };
-  }
+  const now = new Date();
+  const week = now.getFullYear() + '-' + getISOWeek(now);
+  const weekObj = getPracticeWeeks();
+  // Calculate session duration in minutes (rounded)
+  const sessionSeconds = timerDuration - timeLeft;
+  const sessionMinutes = Math.round(sessionSeconds / 60);
+  // Update weekly count
+  weekObj[week] = (weekObj[week] || 0) + 1;
+  // Save updates to localStorage
+  setPracticeWeeks(weekObj);
+  localStorage.setItem('practiceCount', String(weekObj[week]));
+  localStorage.setItem('lastSessionMinutes', String(sessionMinutes));
+
+  return { week, weekObj };
+}
+
   
   function getBadges(): string[] {
     try {
@@ -171,11 +179,12 @@ export default function TypingTest() {
     }
   }
 
+  
   // Play key sound if enabled (mechanical keyboard style)
   function playKeySound() {
     if (!sound) return;
     try {
-      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
       const o = ctx.createOscillator();
       const g = ctx.createGain();
       // Mechanical keyboard: short, clicky, with a little randomness
