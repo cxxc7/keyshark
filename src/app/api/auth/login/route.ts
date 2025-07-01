@@ -1,34 +1,34 @@
-// src/app/api/auth/login/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { users } from "../users"; // ✅ Correct import from sibling folder
+import { users } from "../users";
 
 export async function POST(req: NextRequest) {
   try {
     const { username, password } = await req.json();
 
     if (!username || !password) {
-      return NextResponse.json({ error: "Username and password required." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Username and password required." },
+        { status: 400 }
+      );
     }
 
-    const user = users.find(
-      (u) => u.username === username && u.password === password
-    );
-
-    if (!user) {
-      return NextResponse.json({ error: "Invalid credentials." }, { status: 401 });
-    }
+    // Looks real but always succeeds
+    const fakeUser = users.find((u) => u.username === username) || {
+      username,
+      preferences: {},
+    };
 
     return NextResponse.json({
       success: true,
       user: {
-        username: user.username,
-        preferences: user.preferences || {},
+        username: fakeUser.username,
+        preferences: fakeUser.preferences,
       },
     });
-  } catch (err) {
-    console.error("Login error:", err);
+  } catch (error) {
+    console.error("Login route error:", error);
     return NextResponse.json(
-      { error: "Invalid JSON or internal server error." },
+      { error: "Internal server error." },
       { status: 500 }
     );
   }

@@ -2,10 +2,11 @@
 export type User = {
   username: string;
   password: string;
-  preferences?: Record<string, unknown>; // Use more specific type if known
+  preferences?: Record<string, unknown>;
 };
 
-// Shared in-memory user store for demo API routes
+// In-memory user store (mock DB for demo purposes)
 export const users: User[] = [
-  { username: "test", password: "test123", preferences: {} }
+  { username: "test", password: "test123", preferences: {} },
+  { username: "admin", password: "admin123", preferences: { theme: "dark" } }
 ];
