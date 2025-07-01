@@ -2,10 +2,17 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+type Preferences = {
+  name?: string;
+  dob?: string;
+  pic?: string | null;
+  email?: string;
+};
+
 type Account = {
   username: string;
   password: string;
-  preferences?: Record<string, any>;
+  preferences?: Preferences;
 };
 
 export default function SignupPage() {
@@ -21,29 +28,31 @@ export default function SignupPage() {
       setError("Please enter both username and password.");
       return;
     }
+
     try {
       const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
+
       const data = await res.json();
       if (!res.ok) {
         setError(data.error ?? "Signup failed.");
         return;
       }
+
       if (typeof window !== "undefined") {
-        let accounts: Account[] = [];
         const accountsRaw = localStorage.getItem("accounts");
-        if (accountsRaw) {
-          accounts = JSON.parse(accountsRaw);
-        }
-        const idx = accounts.findIndex((acc) => acc.username === username);
-        if (idx === -1) {
+        const accounts: Account[] = accountsRaw ? JSON.parse(accountsRaw) : [];
+
+        const exists = accounts.find((acc) => acc.username === username);
+        if (!exists) {
           accounts.push({ username, password, preferences: {} });
           localStorage.setItem("accounts", JSON.stringify(accounts));
         }
       }
+
       localStorage.setItem("user", username);
       setError("");
       router.push("/profile");
@@ -65,23 +74,12 @@ export default function SignupPage() {
         <p className="text-center text-zinc-500 dark:text-zinc-400 mb-2 text-sm xs:text-base">
           Sign up to get started
         </p>
+
+        {/* Username input */}
         <div className="relative">
           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none">
-            {/* User icon */}
-            <svg
-              width="20"
-              height="20"
-              className="xs:w-[22px] xs:h-[22px]"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16.5 7.5v.008M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 0c-3.038 0-5.5 2.462-5.5 5.5v.25A2.25 2.25 0 0 0 8.75 20h6.5a2.25 2.25 0 0 0 2.25-2.25v-.25c0-3.038-2.462-5.5-5.5-5.5Z"
-              />
+            <svg width="20" height="20" className="xs:w-[22px] xs:h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 7.5v.008M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 0c-3.038 0-5.5 2.462-5.5 5.5v.25A2.25 2.25 0 0 0 8.75 20h6.5a2.25 2.25 0 0 0 2.25-2.25v-.25c0-3.038-2.462-5.5-5.5-5.5Z" />
             </svg>
           </span>
           <input
@@ -94,23 +92,12 @@ export default function SignupPage() {
             autoComplete="username"
           />
         </div>
+
+        {/* Password input */}
         <div className="relative">
           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none">
-            {/* Lock icon */}
-            <svg
-              width="20"
-              height="20"
-              className="xs:w-[22px] xs:h-[22px]"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16.5 10.5V7a4.5 4.5 0 0 0-9 0v3.5m-1.5 0A1.5 1.5 0 0 0 4.5 12v6A1.5 1.5 0 0 0 6 19.5h12a1.5 1.5 0 0 0 1.5-1.5v-6a1.5 1.5 0 0 0-1.5-1.5m-13.5 0h15"
-              />
+            <svg width="20" height="20" className="xs:w-[22px] xs:h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V7a4.5 4.5 0 0 0-9 0v3.5m-1.5 0A1.5 1.5 0 0 0 4.5 12v6A1.5 1.5 0 0 0 6 19.5h12a1.5 1.5 0 0 0 1.5-1.5v-6a1.5 1.5 0 0 0-1.5-1.5m-13.5 0h15" />
             </svg>
           </span>
           <input
@@ -130,53 +117,31 @@ export default function SignupPage() {
             onClick={() => setShowPassword((v) => !v)}
           >
             {showPassword ? (
-              // Eye-off icon
-              <svg
-                width="20"
-                height="20"
-                className="xs:w-[22px] xs:h-[22px]"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3 3l18 18M10.477 10.477A3 3 0 0 0 12 15a3 3 0 0 0 2.828-4.243M9.88 9.88A3 3 0 0 1 15 12c0 1.657-1.343 3-3 3a3 3 0 0 1-2.12-.88M21 12c0 4-4.03 7-9 7-1.657 0-3.22-.267-4.5-.732M3 12c0-4 4.03-7 9-7 1.657 0 3.22.267 4.5.732"
-                />
+              <svg width="20" height="20" className="xs:w-[22px] xs:h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 3l18 18M10.477 10.477A3 3 0 0 0 12 15a3 3 0 0 0 2.828-4.243M9.88 9.88A3 3 0 0 1 15 12c0 1.657-1.343 3-3 3a3 3 0 0 1-2.12-.88M21 12c0 4-4.03 7-9 7-1.657 0-3.22-.267-4.5-.732M3 12c0-4 4.03-7 9-7 1.657 0 3.22.267 4.5.732" />
               </svg>
             ) : (
-              // Eye icon
-              <svg
-                width="20"
-                height="20"
-                className="xs:w-[22px] xs:h-[22px]"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 5c-7 0-9 7-9 7s2 7 9 7 9-7 9-7-2-7-9-7Zm0 0a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z"
-                />
+              <svg width="20" height="20" className="xs:w-[22px] xs:h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 5c-7 0-9 7-9 7s2 7 9 7 9-7 9-7-2-7-9-7Zm0 0a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z" />
               </svg>
             )}
           </button>
         </div>
+
+        {/* Error message */}
         {error && (
           <div className="text-red-500 text-sm text-center font-semibold bg-red-50 dark:bg-zinc-800 rounded-lg py-2 px-3">
             {error}
           </div>
         )}
+
         <button
           type="submit"
           className="mt-2 py-2 xs:py-3 px-4 rounded-xl bg-blue-600 text-white font-bold text-base xs:text-lg hover:bg-blue-700 transition shadow-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
         >
           Sign Up
         </button>
+
         <div className="text-xs xs:text-sm text-center text-zinc-500 mt-2">
           Already have an account?{" "}
           <a
