@@ -1,8 +1,7 @@
-
 # KeyShark — Inspired by Monkeytype
 
 <p align="center">
-  <img src="/public/globe.svg" alt="KeyShark Logo" width="80" style="animation:spin 2s linear infinite;">
+  <img src="https://imgcdn.stablediffusionweb.com/2024/3/22/02446f38-a942-41dd-84d0-e2951603dcb5.jpg" alt="KeyShark Logo" width="120" style="border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);" />
 </p>
 
 <p align="center">
@@ -38,30 +37,36 @@ A modern, minimalist typing test web app for practicing and improving typing spe
 
 ---
 
+## 🌍 Live Demo
+
+Try it out here: [https://keyshark1.onrender.com/](https://keyshark1.onrender.com/)
+
+---
+
 ## 🛠️ Tech Stack & Implementation
 
-- <b>Next.js</b> — React framework for SSR, routing, and fast builds
-- <b>TypeScript</b> — Type safety across all components and logic
-- <b>Tailwind CSS</b> — Utility-first CSS for rapid, responsive UI
-- <b>Vercel</b> — Hosting and deployment
-- <b>LocalStorage</b> — Persistent user data (profile, stats, settings, badges)
-- <b>SVG</b> — Custom icons, pie charts, and UI visuals
-- <b>Accessibility</b> — Keyboard navigation, ARIA labels, and color contrast
-- <b>Performance</b> — Optimized rendering, minimal dependencies, and fast load times
+- <b>Next.js</b> — React framework for SSR, routing, and fast builds  
+- <b>TypeScript</b> — Type safety across all components and logic  
+- <b>Tailwind CSS</b> — Utility-first CSS for rapid, responsive UI  
+- <b>Vercel</b> — Hosting and deployment  
+- <b>LocalStorage</b> — Persistent user data (profile, stats, settings, badges)  
+- <b>SVG</b> — Custom icons, pie charts, and UI visuals  
+- <b>Accessibility</b> — Keyboard navigation, ARIA labels, and color contrast  
+- <b>Performance</b> — Optimized rendering, minimal dependencies, and fast load times  
 
 ---
 
 ## 🚀 Getting Started
 
-1. Install dependencies: <code>npm install</code>
-2. Run the dev server: <code>npm run dev</code>
-3. Open <a href="http://localhost:1234" target="_blank">http://localhost:1234</a>
+1. Install dependencies: <code>npm install</code>  
+2. Run the dev server: <code>npm run dev</code>  
+3. Open [http://localhost:1234](http://localhost:1234)
 
 ---
 
 ## 🎨 Customization
 
-- Update the typing logic and UI in <code>src/app/</code>
+- Update the typing logic and UI in <code>src/app/</code>  
 - Add new features, themes, or achievements as needed
 
 ---
