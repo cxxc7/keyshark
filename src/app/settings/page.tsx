@@ -128,8 +128,8 @@ export default function SettingsPage() {
                 className={`relative w-12 h-6 transition-colors duration-200 rounded-full focus:outline-none`}
                 style={{ backgroundColor: sound ? 'var(--accent-color, #2563eb)' : '' }}
                 onClick={() => handleSoundChange(!sound)}
-                aria-pressed={sound}
-                aria126-label="Toggle key sound"
+                aria-pressed={sound} 
+                aria-label="Toggle key sound"
               >
                 <span className={`absolute left-1 top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${sound ? 'translate-x-6' : ''}`}></span>
               </button>

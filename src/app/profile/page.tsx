@@ -162,8 +162,7 @@ export default function ProfilePage() {
           </div>
           <form className="flex flex-col gap-3 xs:gap-4 w-full max-w-xs xs:max-w-md mx-auto mt-2">
             <label className="text-sm xs:text-base font-semibold">
-              Name
-              <input
+              Name<input
                 type="text"
                 className="mt-1 p-2 xs:p-3 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 w-full text-base xs:text-lg font-medium focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 value={name}
