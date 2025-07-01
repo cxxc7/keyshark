@@ -32,7 +32,7 @@ A modern, minimalist typing test web app for practicing and improving typing spe
   <li><b>Practice streaks and session history</b> 🔥</li>
   <li><b>Animated marquee for feature highlights</b> ⚡</li>
   <li><b>Collapsible sidebar navigation</b> 📂</li>
-  <li><b>Open source and deployable to Vercel</b> 🌐</li>
+  <li><b>Open source and deployable to Render</b> 🌐</li>
 </ul>
 
 ---
@@ -48,7 +48,7 @@ Try it out here: [https://keyshark1.onrender.com/](https://keyshark1.onrender.co
 - <b>Next.js</b> — React framework for SSR, routing, and fast builds  
 - <b>TypeScript</b> — Type safety across all components and logic  
 - <b>Tailwind CSS</b> — Utility-first CSS for rapid, responsive UI  
-- <b>Vercel</b> — Hosting and deployment  
+- <b>Render</b> — Hosting and deployment  
 - <b>LocalStorage</b> — Persistent user data (profile, stats, settings, badges)  
 - <b>SVG</b> — Custom icons, pie charts, and UI visuals  
 - <b>Accessibility</b> — Keyboard navigation, ARIA labels, and color contrast  
